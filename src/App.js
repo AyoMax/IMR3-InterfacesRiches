@@ -4,7 +4,7 @@ import {VideoPlayer} from "./components/VideoPlayer/VideoPlayer";
 import {VideoChapters} from "./components/VideoChapters/VideoChapters";
 import {ChatRoom} from "./components/ChatRoom/ChatRoom";
 import {ChatWriter} from "./components/ChatWriter/ChatWriter";
-import {Map} from "./components/Map/Map";
+import {MapView} from "./components/MapView/MapView";
 import {Col, Container, Row, Tabs, Tab} from "react-bootstrap";
 import {Keywords} from "./components/Keywords/Keywords";
 
@@ -121,7 +121,7 @@ class App extends React.Component {
                                         eventKey="map"
                                         title="Carte"
                                     >
-                                        <Map
+                                        <MapView
                                             ref={map => {
                                                 this.map = map
                                             }}
