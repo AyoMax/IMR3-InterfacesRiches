@@ -107,7 +107,8 @@ class App extends React.Component {
                                     ref={videoPlayer => {
                                         this.videoPlayer = videoPlayer
                                     }}
-                                    film={data.Film}/>
+                                    film={data.Film}
+                                    onStateChange={(state) => this.map.updateState(state)}/>
                                 <Tabs defaultActiveKey="chapters">
                                     <Tab
                                         eventKey="chapters"
@@ -120,7 +121,11 @@ class App extends React.Component {
                                         eventKey="map"
                                         title="Carte"
                                     >
-                                        <Map waypoints={data.Waypoints}/>
+                                        <Map
+                                            ref={map => {
+                                                this.map = map
+                                            }}
+                                            waypoints={data.Waypoints} />
                                     </Tab>
                                     <Tab
                                         eventKey="keywords"
