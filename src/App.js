@@ -1,12 +1,12 @@
 import React from "react";
 import './App.css';
-import {VideoPlayer} from "./components/VideoPlayer";
-import {VideoChapters} from "./components/VideoChapters";
-import {ChatRoom} from "./components/ChatRoom";
-import {ChatWriter} from "./components/ChatWriter";
-import {Map} from "./components/Map";
+import {VideoPlayer} from "./components/VideoPlayer/VideoPlayer";
+import {VideoChapters} from "./components/VideoChapters/VideoChapters";
+import {ChatRoom} from "./components/ChatRoom/ChatRoom";
+import {ChatWriter} from "./components/ChatWriter/ChatWriter";
+import {Map} from "./components/Map/Map";
 import {Col, Container, Row, Tabs, Tab} from "react-bootstrap";
-import {Keywords} from "./components/Keywords";
+import {Keywords} from "./components/Keywords/Keywords";
 
 class App extends React.Component {
     constructor(props) {
