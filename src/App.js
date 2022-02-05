@@ -101,7 +101,24 @@ class App extends React.Component {
             return (
                 <Container fluid>
                     <Row>
-                        <Col md="8">
+                        <Col md="3">
+                            <Tabs defaultActiveKey="chapters">
+                                <Tab
+                                    eventKey="chapters"
+                                    title="Chapitres"
+                                >
+                                    <VideoChapters chapters={data.Chapters}
+                                                   onChapterClick={(index) => this.goToVideoChapter(index)}/>
+                                </Tab>
+                                <Tab
+                                    eventKey="keywords"
+                                    title="Mots clés"
+                                >
+                                    <Keywords keywords={data.Keywords}/>
+                                </Tab>
+                            </Tabs>
+                        </Col>
+                        <Col md="6">
                             <main>
                                 <VideoPlayer
                                     ref={videoPlayer => {
@@ -109,34 +126,14 @@ class App extends React.Component {
                                     }}
                                     film={data.Film}
                                     onStateChange={(state) => this.map.updateState(state)}/>
-                                <Tabs defaultActiveKey="chapters">
-                                    <Tab
-                                        eventKey="chapters"
-                                        title="Chapitres"
-                                    >
-                                        <VideoChapters chapters={data.Chapters}
-                                                       onChapterClick={(index) => this.goToVideoChapter(index)}/>
-                                    </Tab>
-                                    <Tab
-                                        eventKey="map"
-                                        title="Carte"
-                                    >
-                                        <MapView
-                                            ref={map => {
-                                                this.map = map
-                                            }}
-                                            waypoints={data.Waypoints} />
-                                    </Tab>
-                                    <Tab
-                                        eventKey="keywords"
-                                        title="Mots clés"
-                                    >
-                                        <Keywords keywords={data.Keywords}/>
-                                    </Tab>
-                                </Tabs>
+                                <MapView
+                                    ref={map => {
+                                        this.map = map
+                                    }}
+                                    waypoints={data.Waypoints} />
                             </main>
                         </Col>
-                        <Col md="4">
+                        <Col md="3">
                             <aside>
                                 <ChatRoom
                                     messages={this.state.messages}

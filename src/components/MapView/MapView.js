@@ -2,15 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
-import L from 'leaflet';
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});
-
 export class MapView extends React.Component {
 
     static propTypes = {
@@ -22,20 +13,11 @@ export class MapView extends React.Component {
 
         this.state = {
             currentTime: 0,
-            centerPosition: [41.068192, -99.526149]
+            centerPosition: [41.068192, -99.526149],
+            currentWaypoints: []
         }
 
         this.leafletMap = React.createRef();
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            console.log("refresh leaflet")
-            console.log(this.leafletMap)
-            this.leafletMap.current.leafletMap.invalidateSize()
-        }, 150);
-
-        this.updatePosition(0);
     }
 
     updateState(state){
@@ -43,22 +25,18 @@ export class MapView extends React.Component {
     }
 
     updatePosition(currentTime){
-        var waypoint = this.props.waypoints.find((element, index) => {
-            if((index < this.props.waypoints.length-1 && element.timestamp < currentTime && this.props.waypoints[index + 1].timestamp < currentTime )){
-                return true;
-            }
-
+        let newCurrentWaypoints = []
+        this.props.waypoints.forEach(waypoint => {
+            if(waypoint.timestamp < currentTime) newCurrentWaypoints.push(waypoint)
         })
-        if(waypoint != null){
-            console.log(waypoint)
-            this.setState({
-                centerPosition: [waypoint.lat, waypoint.lng]
-            });
-        }
+        this.setState({
+            currentWaypoints: newCurrentWaypoints
+        })
     }
     render() {
         return (
             <MapContainer ref={this.leafletMap}
+                          id={"map"}
                           dragging={false}
                           center={this.state.centerPosition}
                           zoom={4}
@@ -68,13 +46,13 @@ export class MapView extends React.Component {
                     attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                 />
-                { this.props.waypoints.map((waypoint, index) => (
+                { this.state.currentWaypoints.map((waypoint, index) => (
                     <Marker
                         position={[
                             waypoint.lat,
                             waypoint.lng
                         ]}
-                        key={index}>
+                        key={`marker-${index}`}>
                         <Popup>{waypoint.label}</Popup>
                     </Marker>
                 ))}
