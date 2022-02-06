@@ -12,12 +12,9 @@ export class MapView extends React.Component {
         super(props);
 
         this.state = {
-            currentTime: 0,
             centerPosition: [41.068192, -99.526149],
             currentWaypoints: []
         }
-
-        this.leafletMap = React.createRef();
     }
 
     updateState(state){
@@ -33,6 +30,7 @@ export class MapView extends React.Component {
             currentWaypoints: newCurrentWaypoints
         })
     }
+
     render() {
         return (
             <MapContainer ref={this.leafletMap}

@@ -90,6 +90,11 @@ class App extends React.Component {
         this.videoPlayer.setCurrentTime(timeToSet);
     }
 
+    updateCurrentTimes(state)
+    {
+        this.map.updateState(state)
+        this.keywords.updateState(state)
+    }
     /* ========= */
     /* RENDERING */
     /* ========= */
@@ -114,7 +119,11 @@ class App extends React.Component {
                                     eventKey="keywords"
                                     title="Mots clés"
                                 >
-                                    <Keywords keywords={data.Keywords}/>
+                                    <Keywords
+                                        ref={keywords => {
+                                            this.keywords = keywords
+                                        }}
+                                        keywords={data.Keywords}/>
                                 </Tab>
                             </Tabs>
                         </Col>
@@ -125,7 +134,7 @@ class App extends React.Component {
                                         this.videoPlayer = videoPlayer
                                     }}
                                     film={data.Film}
-                                    onStateChange={(state) => this.map.updateState(state)}/>
+                                    onStateChange={(state) => this.updateCurrentTimes(state)}/>
                                 <MapView
                                     ref={map => {
                                         this.map = map

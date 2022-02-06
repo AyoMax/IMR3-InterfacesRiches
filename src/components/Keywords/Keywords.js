@@ -10,30 +10,43 @@ export class Keywords extends React.Component {
         super(props);
 
         this.state = {
-            selected: -1
+            currentKeywords: []
         }
     }
 
-    render() {
-        const selectedKeywordIndex = this.state.selected;
-        if (selectedKeywordIndex >= 0) {
-            return (
-                <div>
-                    <ul>
-                        {this.props.keywords[selectedKeywordIndex].data.map((item, index) => (
-                            <li>
-                                <a href={item.url}>{item.title}</a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )
-        } else {
-            return (
-                <div>
+    updateState(state){
+        this.updateKeywords(state.currentTime)
+    }
 
-                </div>
-            )
-        }
+    updateKeywords(currentTime){
+        console.log(currentTime)
+        let newCurrentKeywords = []
+        this.props.keywords.forEach(keyword => {
+            if(keyword.pos < currentTime) newCurrentKeywords.push(keyword)
+        })
+        this.setState({
+            currentKeywords: newCurrentKeywords
+        })
+        console.log(this.state)
+    }
+
+    render() {
+        return (
+            <div>
+                <ul>
+                    {this.state.currentKeywords.map((item, index) => (
+                        <li>
+                            <ul>
+                                {item.data.map((keyword, index) => (
+                                    <li>
+                                        <a href={keyword.url}>{keyword.title}</a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
     }
 }
