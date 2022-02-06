@@ -19,7 +19,6 @@ export class Keywords extends React.Component {
     }
 
     updateKeywords(currentTime){
-        console.log(currentTime)
         let newCurrentKeywords = []
         this.props.keywords.forEach(keyword => {
             if(keyword.pos < currentTime) newCurrentKeywords.push(keyword)
@@ -27,7 +26,6 @@ export class Keywords extends React.Component {
         this.setState({
             currentKeywords: newCurrentKeywords
         })
-        console.log(this.state)
     }
 
     render() {
@@ -35,10 +33,10 @@ export class Keywords extends React.Component {
             <div>
                 <ul>
                     {this.state.currentKeywords.map((item, index) => (
-                        <li>
+                        <li key={`keyword-group-${index}`}>
                             <ul>
                                 {item.data.map((keyword, index) => (
-                                    <li>
+                                    <li key={`keyword-${index}`}>
                                         <a href={keyword.url}>{keyword.title}</a>
                                     </li>
                                 ))}

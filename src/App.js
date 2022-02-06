@@ -82,7 +82,12 @@ class App extends React.Component {
 
     goToVideoChapter(index) {
         const timeToSet = this.state.data.Chapters[index].pos;
+        console.log(timeToSet)
         this.videoPlayer.setCurrentTime(timeToSet);
+    }
+
+    goToVideoTimestamp(timestamp){
+        this.videoPlayer.setCurrentTime(parseInt(timestamp)+5);
     }
 
     updateCurrentTimes(state)
@@ -134,6 +139,7 @@ class App extends React.Component {
                                     ref={map => {
                                         this.map = map
                                     }}
+                                    onMarkerClick={(timestamp) => this.goToVideoTimestamp(timestamp)}
                                     waypoints={data.Waypoints} />
                             </main>
                         </Col>
