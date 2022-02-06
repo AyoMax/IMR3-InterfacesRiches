@@ -1,6 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import * as L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+
+const LeafIcon = L.Icon.extend({
+    options: {}
+});
+
+const blueIcon = new LeafIcon({
+        iconUrl: "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|abcdef&chf=a,s,ee00FFFF",
+        iconAnchor: [12, 41],
+        popupAnchor: [-1, -30]
+    }),
+    greenIcon = new LeafIcon({
+        iconUrl: "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ecc71&chf=a,s,ee00FFFF",
+        iconAnchor: [12, 41],
+        popupAnchor: [-1, -30]
+    });
 
 export class MapView extends React.Component {
 
@@ -9,36 +25,39 @@ export class MapView extends React.Component {
         onMarkerClick: PropTypes.func.isRequired
     }
 
+
     constructor(props) {
         super(props);
 
         this.state = {
             centerPosition: [41.068192, -99.526149],
-            currentWaypoints: []
+            currentTime: 0
         }
 
         this.mapRef = React.createRef();
     }
 
     updateState(state){
-        console.log(state)
-        this.updatePosition(state.currentTime)
+        // this.updatePosition(state.currentTime)
+        this.setState({
+            currentTime: state.currentTime
+        })
     }
 
-    updatePosition(currentTime){
-        let newCurrentWaypoints = []
-        let oldCurrentWaypointsLength = this.state.currentWaypoints.length
-        this.props.waypoints.forEach(waypoint => {
-            if(waypoint.timestamp < currentTime) newCurrentWaypoints.push(waypoint)
-        })
-        let newCurrentWaypointsLength = newCurrentWaypoints.length
-        this.setState({
-            currentWaypoints: newCurrentWaypoints
-        })
-        if(newCurrentWaypointsLength != oldCurrentWaypointsLength){
-            this.mapRef.current.setView([newCurrentWaypoints.at(-1).lat, newCurrentWaypoints.at(-1).lng])
-        }
-    }
+    // updatePosition(currentTime){
+    //     let newCurrentWaypoints = []
+    //     let oldCurrentWaypointsLength = this.state.currentWaypoints.length
+    //     this.props.waypoints.forEach(waypoint => {
+    //         if(waypoint.timestamp < currentTime) newCurrentWaypoints.push(waypoint)
+    //     })
+    //     let newCurrentWaypointsLength = newCurrentWaypoints.length
+    //     this.setState({
+    //         currentWaypoints: newCurrentWaypoints
+    //     })
+    //     if(newCurrentWaypointsLength != oldCurrentWaypointsLength){
+    //         this.mapRef.current.setView([newCurrentWaypoints.at(-1).lat, newCurrentWaypoints.at(-1).lng])
+    //     }
+    // }
 
     handleMarkerClick(waypoint) {
         this.mapRef.current.setView([waypoint.lat, waypoint.lng])
@@ -57,13 +76,14 @@ export class MapView extends React.Component {
                     attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                 />
-                { this.state.currentWaypoints.map((waypoint, index) => (
+                { this.props.waypoints.map((waypoint, index) => (
                     <Marker
                         position={[
                             waypoint.lat,
                             waypoint.lng
                         ]}
                         key={`marker-${index}`}
+                        icon={waypoint.timestamp <= this.state.currentTime ? greenIcon : blueIcon}
                         eventHandlers={{
                             click: this.handleMarkerClick.bind(this, waypoint)
                         }}>
