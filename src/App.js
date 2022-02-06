@@ -1,5 +1,5 @@
 import React from "react";
-import './App.css';
+import './App.scss';
 import {VideoPlayer} from "./components/VideoPlayer/VideoPlayer";
 import {VideoChapters} from "./components/VideoChapters/VideoChapters";
 import {ChatRoom} from "./components/ChatRoom/ChatRoom";
@@ -42,33 +42,28 @@ class App extends React.Component {
     /* =================== */
 
     initWebsocket() {
-        // Get Websocket
         const URL = "wss://imr3-react.herokuapp.com";
-        this.setState({
-            connected: false,
-            ws: new WebSocket(URL)
-        });
+        this.ws = new WebSocket(URL);
 
-        // Catch websocket events
-        // this.state.ws.onopen = () => {
-        //     console.log("connected");
-        //     this.setState({
-        //         connected: true
-        //     });
-        // };
-        //
-        // this.state.ws.onmessage = evt => {
-        //     const messages = JSON.parse(evt.data);
-        //     messages.map(message => this.addMessage(message));
-        // };
-        //
-        // this.state.ws.onclose = () => {
-        //     console.log("disconnected, reconnect.");
-        //     this.setState({
-        //         connected: false,
-        //         ws: new WebSocket(URL)
-        //     });
-        // };
+        this.ws.onopen = () => {
+            console.log("connected");
+            this.setState({
+                connected: true
+            });
+        };
+
+        this.ws.onmessage = evt => {
+            const messages = JSON.parse(evt.data);
+            messages.map(message => this.addMessage(message));
+        };
+
+        this.ws.onclose = () => {
+            console.log("disconnected, reconnect.");
+            this.setState({
+                connected: false,
+                ws: new WebSocket(URL)
+            });
+        };
     }
 
     addMessage(message) {

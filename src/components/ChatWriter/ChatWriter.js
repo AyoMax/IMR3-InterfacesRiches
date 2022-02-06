@@ -12,8 +12,12 @@ export class ChatWriter extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div class="chatwriter">
+                <div class="form-group">
+                    <label htmlFor="pseudo">Pseudo</label>
+                    <input id="pseudo" name="pseudo" type="text"/>
+                </div>
+                <div class="form-group">
                     <label htmlFor="newMessage">Message</label>
                     <textarea id="newMessage" name="newMessage">
                     </textarea>

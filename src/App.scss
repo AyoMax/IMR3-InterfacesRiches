@@ -1,0 +1,37 @@
+$c-chatroom: #111;
+$c-message: #333;
+$c-white: #fff;
+
+
+.leaflet-container{
+    height: 200px;
+    width: 100%;
+}
+
+.chatroom {
+    background-color: $c-chatroom;
+
+    .message {
+        background-color: $c-message;
+        color: $c-white;
+    }
+}
+
+.chatwriter {
+    background-color: $c-chatroom;
+    color: $c-white;
+    padding: 5px;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+
+        input, textarea {
+            border-radius: 1em;
+        }
+
+        input {
+
+        }
+    }
+}

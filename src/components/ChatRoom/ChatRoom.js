@@ -23,9 +23,9 @@ export class ChatRoom extends React.Component {
 
     render() {
         return (
-            <div>
+            <div class="chatroom">
                 {this.props.messages.map((item, index) => (
-                    <div>
+                    <div class="message">
                         <div>{item.name}</div>
                         <div>{item.message}</div>
                         {(item) => {
