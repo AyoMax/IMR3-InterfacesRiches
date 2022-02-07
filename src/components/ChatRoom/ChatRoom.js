@@ -5,7 +5,7 @@ export class ChatRoom extends React.Component {
 
     static propTypes = {
         messages: PropTypes.arrayOf(PropTypes.shape({
-            when: PropTypes.string.isRequired,
+            when: PropTypes.number.isRequired,
             name: PropTypes.string.isRequired,
             message: PropTypes.string.isRequired,
             moment: PropTypes.number
@@ -21,23 +21,27 @@ export class ChatRoom extends React.Component {
         this.props.onMomentClick(seconds);
     }
 
+    formattedTimestamp(timestamp) {
+        let date = new Date(timestamp);
+        return `${date.getUTCHours()}h ${date.getUTCMinutes()}min ${date.getUTCSeconds()}s`;
+    }
+
     render() {
         return (
-            <div class="chatroom">
+            <div className="chatroom">
                 {this.props.messages.map((item, index) => (
-                    <div class="message">
-                        <div>{item.name}</div>
+                    <div key={index} className="msg">
+                        <div className="msg-head">
+                            <div className="msg-pseudo">{item.name}</div>
+                            <div className="msg-date">{this.formattedTimestamp(item.when)}</div>
+                        </div>
                         <div>{item.message}</div>
-                        {(item) => {
-                            if (item.moment !== undefined) {
-                                return (
-                                    <button data-moment={item.moment}
-                                            onClick={this.handleMomentClick.bind(item.moment)}>
-                                        Moment à voir
-                                    </button>
-                                )
-                            }
-                        }}
+                        {item.moment !== undefined &&
+                            <button data-moment={item.moment}
+                                    onClick={this.handleMomentClick.bind(item.moment)}>
+                                Moment à voir
+                            </button>
+                        }
                     </div>
                 ))}
             </div>

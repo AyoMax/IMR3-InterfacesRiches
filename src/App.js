@@ -61,19 +61,20 @@ class App extends React.Component {
             console.log("disconnected, reconnect.");
             this.setState({
                 connected: false,
-                ws: new WebSocket(URL)
             });
+            this.ws = new WebSocket(URL)
         };
     }
 
     addMessage(message) {
-        this.state.messages.push(message);
+        let stateMessages = this.state.messages;
+        stateMessages.push(message)
+        this.setState({messages: stateMessages});
     }
 
-    submitMessage = messageString => {
-        const message = {name: "Yoan", message: "test"};
-        console.log(message);
-        this.state.ws.send(JSON.stringify(message));
+    submitMessage = (pseudoString, messageString) => {
+        const message = {name: pseudoString, message: messageString};
+        this.ws.send(JSON.stringify(message));
     };
 
     /* =============== */
@@ -86,15 +87,15 @@ class App extends React.Component {
         this.videoPlayer.setCurrentTime(timeToSet);
     }
 
-    goToVideoTimestamp(timestamp){
-        this.videoPlayer.setCurrentTime(parseInt(timestamp)+5);
+    goToVideoTimestamp(timestamp) {
+        this.videoPlayer.setCurrentTime(parseInt(timestamp) + 5);
     }
 
-    updateCurrentTimes(state)
-    {
+    updateCurrentTimes(state) {
         this.map.updateState(state)
         this.keywords.updateState(state)
     }
+
     /* ========= */
     /* RENDERING */
     /* ========= */
@@ -140,15 +141,16 @@ class App extends React.Component {
                                         this.map = map
                                     }}
                                     onMarkerClick={(timestamp) => this.goToVideoTimestamp(timestamp)}
-                                    waypoints={data.Waypoints} />
+                                    waypoints={data.Waypoints}/>
                             </main>
                         </Col>
                         <Col md="3">
-                            <aside>
+                            <aside className="chat">
                                 <ChatRoom
                                     messages={this.state.messages}
                                     onMomentClick={(seconds) => this.videoPlayer.setCurrentTime(seconds)}/>
-                                <ChatWriter onSendMessage={message => this.submitMessage(message)}/>
+                                <hr/>
+                                <ChatWriter onSendMessage={this.submitMessage}/>
                             </aside>
                         </Col>
                     </Row>
