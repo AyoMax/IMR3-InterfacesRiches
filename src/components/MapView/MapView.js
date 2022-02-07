@@ -16,6 +16,11 @@ const blueIcon = new LeafIcon({
         iconUrl: "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ecc71&chf=a,s,ee00FFFF",
         iconAnchor: [12, 41],
         popupAnchor: [-1, -30]
+    }),
+    yellowIcon = new LeafIcon({
+        iconUrl: "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|efef62&chf=a,s,ee00FFFF",
+        iconAnchor: [12, 41],
+        popupAnchor: [-1, -30]
     });
 
 export class MapView extends React.Component {
@@ -62,7 +67,37 @@ export class MapView extends React.Component {
     handleMarkerClick(waypoint) {
         this.mapRef.current.setView([waypoint.lat, waypoint.lng])
         console.log([waypoint.lat, waypoint.lng])
-        this.props.onMarkerClick(waypoint.timestamp);
+        this.props.onMarkerClick(waypoint.timestamp)
+    }
+
+    getIcon(index, currentTime){
+        let icon;
+        let currentWaypoint = this.props.waypoints[index];
+        let nextTimePoint;
+
+        let nextIndex = index + 1;
+        let find = false;
+        while(nextIndex < this.props.waypoints.length && !find) {
+            if(this.props.waypoints[index].timestamp == this.props.waypoints[nextIndex].timestamp) find = true;
+            nextIndex++;
+        }
+        nextIndex = find ? nextIndex : index + 1
+
+        if(nextIndex < this.props.waypoints.length){
+            nextTimePoint = this.props.waypoints[nextIndex].timestamp;
+        }else{
+            nextTimePoint = this.props.waypoints[index].timestamp + 1
+        }
+
+        if(currentWaypoint.timestamp <= currentTime && nextTimePoint > currentTime){
+            icon = yellowIcon
+        }else if(currentWaypoint.timestamp <= currentTime){
+            icon = greenIcon
+        }else{
+            icon = blueIcon
+        }
+
+        return icon
     }
 
     render() {
@@ -83,7 +118,7 @@ export class MapView extends React.Component {
                             waypoint.lng
                         ]}
                         key={`marker-${index}`}
-                        icon={waypoint.timestamp <= this.state.currentTime ? greenIcon : blueIcon}
+                        icon={this.getIcon(index, this.state.currentTime)}
                         eventHandlers={{
                             click: this.handleMarkerClick.bind(this, waypoint)
                         }}>
