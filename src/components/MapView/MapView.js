@@ -49,7 +49,7 @@ export class MapView extends React.Component {
     }
 
     handleMarkerClick(waypoint) {
-        this.props.onMarkerClick(waypoint.timestamp)
+        this.props.onMarkerClick(parseInt(waypoint.timestamp) + 5);
     }
 
     getIcon(index, currentTime) {
@@ -60,7 +60,7 @@ export class MapView extends React.Component {
         let nextIndex = index + 1;
         let find = false;
         while (nextIndex < this.props.waypoints.length && !find) {
-            if (this.props.waypoints[index].timestamp == this.props.waypoints[nextIndex].timestamp) find = true;
+            if (this.props.waypoints[index].timestamp === this.props.waypoints[nextIndex].timestamp) find = true;
             nextIndex++;
         }
         nextIndex = find ? nextIndex : index + 1

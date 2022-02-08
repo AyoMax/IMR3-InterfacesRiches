@@ -15,7 +15,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            connected: false,
+            connected: true,
             data_loaded: false,
             data: {},
             messages: []
@@ -26,27 +26,31 @@ class App extends React.Component {
     /* LIFECYCLE HOOK(S) */
     /* ================= */
 
-    componentDidMount() {
+    async componentDidMount() {
+        let isServerUp = false;
         // Get JSON
-        fetch("https://imr3-react.herokuapp.com/backend")
+        await fetch("https://imr3-react.herokuapp.com/backend")
             .then(res => res.json())
             .then(result => {
+                console.log(result)
                 this.setState({
-                    connected: true,
                     data_loaded: true,
                     data: result
                 });
+                isServerUp = true;
             })
             .catch(error => {
                 console.log(backup_data)
                 this.setState({
-                    connected: false,
                     data_loaded: true,
                     data: backup_data
                 });
+                isServerUp = false;
                 console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+
             });
-        if(this.state.connected) this.initWebsocket();
+
+        if(isServerUp) this.initWebsocket();
     }
 
     /* =================== */
@@ -79,9 +83,11 @@ class App extends React.Component {
     }
 
     addMessage(message) {
-        let stateMessages = this.state.messages;
-        stateMessages.push(message)
-        this.setState({messages: stateMessages});
+        if (this.ws !== undefined) {
+            let stateMessages = this.state.messages;
+            stateMessages.push(message)
+            this.setState({messages: stateMessages});
+        }
     }
 
     submitMessage = (pseudoString, messageString, momentTimestamp = undefined) => {
@@ -102,7 +108,7 @@ class App extends React.Component {
     }
 
     goToVideoTimestamp(timestamp) {
-        this.videoPlayer.setCurrentTime(parseInt(timestamp) + 5);
+        this.videoPlayer.setCurrentTime(parseInt(timestamp));
     }
 
     updateCurrentTimes(state) {

@@ -43,12 +43,12 @@ export class ChatWriter extends React.Component {
         this.setState({isMomentSent: false});
     }
 
-    timestampToString(timestamp) {
-        const date = new Date(timestamp);
-        let hours = date.getHours();
+    momentToString(moment) {
+        const date = new Date(moment * 1000);
+        let hours = date.getHours() + date.getTimezoneOffset() / 60;
         let minutes = "0" + date.getMinutes();
         let seconds = "0" + date.getSeconds();
-        return `${hours}:${minutes.substring(-2)}:${seconds.substring(-2)}`;
+        return `${hours}:${minutes.slice(-2)}:${seconds.slice(-2)}`;
     }
 
     render() {
@@ -67,7 +67,7 @@ export class ChatWriter extends React.Component {
                 <div className="btn-group">
                     <div className="btn btn-blue-light">
                         <i className="bi bi-hourglass-split"/>
-                        <span>{this.timestampToString(this.state.currentTime)}</span>
+                        <span>{this.momentToString(this.state.currentTime)}</span>
                         <input type="checkbox" checked={this.state.isMomentSent} onChange={this.handleCheckMoment}/>
                     </div>
 

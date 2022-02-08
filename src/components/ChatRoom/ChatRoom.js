@@ -26,7 +26,6 @@ export class ChatRoom extends React.Component {
     }
 
     handleMomentClick(evt, timestamp) {
-        console.log(timestamp)
         if (timestamp !== undefined) this.props.onMomentClick(timestamp);
     }
 
@@ -46,7 +45,15 @@ export class ChatRoom extends React.Component {
         let hours = date.getHours();
         let minutes = "0" + date.getMinutes();
         let seconds = "0" + date.getSeconds();
-        return `${hours}:${minutes.substring(-2)}:${seconds.substring(-2)}`;
+        return `${hours}:${minutes.slice(-2)}:${seconds.slice(-2)}`;
+    }
+
+    momentToString(moment) {
+        const date = new Date(moment * 1000);
+        let hours = date.getHours() + date.getTimezoneOffset() / 60;
+        let minutes = "0" + date.getMinutes();
+        let seconds = "0" + date.getSeconds();
+        return `${hours}:${minutes.slice(-2)}:${seconds.slice(-2)}`;
     }
 
     render() {
@@ -62,13 +69,13 @@ export class ChatRoom extends React.Component {
                             <div className="msg-pseudo">{item.name}</div>
                             <div className="msg-date">{this.timestampToString(item.when)}</div>
                         </div>
-                        <div>{item.message}</div>
-                        {item.moment !== undefined &&
+                        <div className="msg-text">{item.message}</div>
+                        {this.props.messages !== undefined && item.moment !== undefined &&
                             <div className="msg-footer">
-                                <span className="msg-moment">{this.timestampToString(item.moment)}</span>
+                                <span className="msg-moment">{this.momentToString(item.moment)}</span>
                                 <button className="btn-mini btn-white"
                                         data-moment={item.moment}
-                                        onClick={this.handleMomentClick.bind(item.moment)}>
+                                        onClick={(event) => this.handleMomentClick(event, item.moment)}>
                                     Go
                                 </button>
                             </div>
