@@ -37,8 +37,6 @@ export class MapView extends React.Component {
             centerPosition: [41.068192, -99.526149],
             currentTime: 0
         }
-
-        this.mapRef = React.createRef();
     }
 
     updateState(state) {
@@ -83,10 +81,7 @@ export class MapView extends React.Component {
 
     render() {
         return (
-            <MapContainer whenCreated={mapInstance => {
-                this.mapRef.current = mapInstance
-            }}
-                          center={this.state.centerPosition}
+            <MapContainer center={this.state.centerPosition}
                           zoom={4}
                           style={{height: "300px", width: "100%", position: "relative"}}
                           scrollWheelZoom={false}>

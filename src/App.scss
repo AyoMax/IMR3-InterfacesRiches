@@ -64,11 +64,9 @@ h2 {
     width: 10px; /* Mostly for vertical scrollbars */
     height: 10px; /* Mostly for horizontal scrollbars */
   }
-
   &::-webkit-scrollbar-thumb { /* Foreground */
     background: $c-grey-dark-light;
   }
-
   &::-webkit-scrollbar-track { /* Background */
     background: $c-grey-dark;
   }
@@ -351,9 +349,18 @@ h2 {
 /* KEYWORDS */
 /*==========*/
 
-.keyword-component {
-  .keywords-list {
-    > li {
+.keyword-component{
+  .keywords-list{
+    .default-keyword{
+      padding: 0.5rem 1rem;
+      color: $c-white;
+      border-radius: $border-radius;
+      background-color: $c-grey-dark;
+      p{
+        margin: 0;
+      }
+    }
+    >li{
       margin-bottom: 20px;
     }
 
