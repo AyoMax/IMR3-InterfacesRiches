@@ -18,31 +18,35 @@ export class ChatRoom extends React.Component {
 
         this.state = {
             hasFirstScroll: false,
-            scrollHeight: 0
+            scroll: true
         }
+
+        this.chatroomRef = React.createRef();
     }
 
     componentDidMount() {
-        this.autoScrollToBottom();
+        this.chatroomRef.current.scrollTop = this.chatroomRef.current.scrollHeight;
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        if (0 < this.props.messages.length) {
+            const chatroom = this.chatroomRef.current;
+            return chatroom.scrollHeight - (chatroom.scrollTop + chatroom.clientHeight);
+        }
+
+        return null;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.autoScrollToBottom();
+        if (snapshot != null) {
+            if (0 < Math.abs(snapshot) && Math.abs(snapshot) < 1) {
+                this.chatroomRef.current.scrollTop = this.chatroomRef.current.scrollHeight;
+            }
+        }
     }
 
     handleMomentClick(evt, timestamp) {
         if (timestamp !== undefined) this.props.onMomentClick(timestamp);
-    }
-
-    autoScrollToBottom() {
-        this.chatroom.scrollTop = this.chatroom.scrollHeight;
-
-        // if (!this.state.hasFirstScroll) {
-        //     this.setState({hasFirstScroll: true});
-        // } else if (this.chatroom.scrollTop + this.chatroom.clientHeight === this.state.scrollHeight) {
-        //     this.chatroom.scrollTop = this.chatroom.scrollHeight;
-        //     this.setState({scrollHeight: this.chatroom.scrollHeight});
-        // }
     }
 
     timestampToString(timestamp) {
@@ -64,9 +68,7 @@ export class ChatRoom extends React.Component {
     render() {
         return (
             <div
-                ref={chatroom => {
-                    this.chatroom = chatroom
-                }}
+                ref={this.chatroomRef}
                 className="chatroom">
                 {this.props.messages.map((item, index) => (
                     <div key={index} className="msg">
