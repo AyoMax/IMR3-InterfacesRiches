@@ -32,6 +32,7 @@ export class VideoPlayer extends React.Component {
 
     render() {
         const film = this.props.film;
+
         return (
             <div>
                 <h1>{film.title}</h1>

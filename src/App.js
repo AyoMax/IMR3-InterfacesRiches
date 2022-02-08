@@ -128,7 +128,7 @@ class App extends React.Component {
             return (
                 <Container fluid>
                     <Row>
-                        <Col className={"tab"} md="3">
+                        <Col className={"tab p-3 border-right"} md="3">
                             <VideoChapters chapters={data.Chapters}
                                            onChapterClick={(index) => this.goToVideoChapter(index)}/>
                             <Keywords
@@ -137,7 +137,7 @@ class App extends React.Component {
                                 }}
                                 keywords={data.Keywords}/>
                         </Col>
-                        <Col md="6">
+                        <Col md="6" className="p-3">
                             <main>
                                 <VideoPlayer
                                     ref={videoPlayer => {
@@ -153,7 +153,7 @@ class App extends React.Component {
                                     waypoints={data.Waypoints}/>
                             </main>
                         </Col>
-                        <Col md="3">
+                        <Col md="3" className="p-0">
                             <aside className="chat">
                                 <ChatRoom
                                     messages={this.state.messages}

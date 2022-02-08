@@ -17,8 +17,13 @@ export class ChatRoom extends React.Component {
         super(props);
 
         this.state = {
-            hasFirstScroll: false
+            hasFirstScroll: false,
+            scrollHeight: 0
         }
+    }
+
+    componentDidMount() {
+        this.autoScrollToBottom();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -30,14 +35,14 @@ export class ChatRoom extends React.Component {
     }
 
     autoScrollToBottom() {
-        const firstScroll = !this.state.hasFirstScroll;
-        const container = this.chatroom;
-        if (firstScroll) {
-            container.scrollTop = container.scrollHeight;
-            this.setState({hasFirstScroll: true});
-        } else if (container.scrollTop + container.clientHeight === container.scrollHeight) {
-            container.scrollTop = container.scrollHeight;
-        }
+        this.chatroom.scrollTop = this.chatroom.scrollHeight;
+
+        // if (!this.state.hasFirstScroll) {
+        //     this.setState({hasFirstScroll: true});
+        // } else if (this.chatroom.scrollTop + this.chatroom.clientHeight === this.state.scrollHeight) {
+        //     this.chatroom.scrollTop = this.chatroom.scrollHeight;
+        //     this.setState({scrollHeight: this.chatroom.scrollHeight});
+        // }
     }
 
     timestampToString(timestamp) {

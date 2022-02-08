@@ -40,7 +40,11 @@ export class ChatWriter extends React.Component {
     handleSendMsgBtnClick() {
         let moment = this.state.isMomentSent ? this.state.currentTime : undefined;
         this.props.onSendMessage(this.state.pseudo, this.state.message, moment);
-        this.setState({isMomentSent: false});
+        this.setState({
+            pseudo: '',
+            message: '',
+            isMomentSent: false
+        });
     }
 
     momentToString(moment) {
