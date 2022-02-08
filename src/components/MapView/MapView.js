@@ -30,7 +30,6 @@ export class MapView extends React.Component {
         onMarkerClick: PropTypes.func.isRequired
     }
 
-
     constructor(props) {
         super(props);
 
@@ -48,21 +47,6 @@ export class MapView extends React.Component {
             currentTime: state.currentTime
         })
     }
-
-    // updatePosition(currentTime){
-    //     let newCurrentWaypoints = []
-    //     let oldCurrentWaypointsLength = this.state.currentWaypoints.length
-    //     this.props.waypoints.forEach(waypoint => {
-    //         if(waypoint.timestamp < currentTime) newCurrentWaypoints.push(waypoint)
-    //     })
-    //     let newCurrentWaypointsLength = newCurrentWaypoints.length
-    //     this.setState({
-    //         currentWaypoints: newCurrentWaypoints
-    //     })
-    //     if(newCurrentWaypointsLength != oldCurrentWaypointsLength){
-    //         this.mapRef.current.setView([newCurrentWaypoints.at(-1).lat, newCurrentWaypoints.at(-1).lng])
-    //     }
-    // }
 
     handleMarkerClick(waypoint) {
         this.props.onMarkerClick(waypoint.timestamp)

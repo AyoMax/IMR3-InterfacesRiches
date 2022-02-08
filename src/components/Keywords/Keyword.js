@@ -4,37 +4,33 @@ import classnames from 'classnames';
 
 export class Keyword extends React.Component {
     static propTypes = {
+        key: PropTypes.string.isRequired,
         item: PropTypes.object.isRequired,
         lifetime: PropTypes.number.isRequired
     }
 
     constructor(props) {
         super(props);
-
         this.state = {
-            prompt: true
+            prompt: true,
+            currentTime: 0
         }
-
-        // setTimeout(() => {
-        //     this.setState({
-        //         prompt: false
-        //     })
-        // }, this.props.lifetime)
     }
 
     render() {
-        let className = classnames({
-            on : this.state.prompt,
-            off : !this.state.prompt
-        })
-        return (
-            <ul className={className}>
-                {this.props.item.data.map((keyword, index) => (
-                    <li key={`keyword-${index}`}>
-                        <a href={keyword.url}>{keyword.title}</a>
-                    </li>
-                ))}
-            </ul>
-        )
+        if(this.props.currentTime >= this.props.item.pos && this.props.currentTime <= parseInt(this.props.item.pos) + this.props.lifetime){
+            return (
+                <li key={this.props.key}>
+                    <ul>
+                        {this.props.item.data.map((keyword, index) => (
+                            <li key={`keyword-${index}`}>
+                                <a href={keyword.url} target="_blank">{keyword.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </li>)
+        }else{
+            return null
+        }
     }
 }

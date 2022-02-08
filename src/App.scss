@@ -1,3 +1,4 @@
+$c-chatroom: #111;
 $c-message: #222;
 $c-black: #111;
 $c-grey-dark: #222;
@@ -270,10 +271,15 @@ h1 {
       }
     }
   }
-
-  .list-group {
-    .list-group-item {
-      &:first-child {
+  .list-group{
+    .list-group-item{
+      transition: all 0.2s ease-in-out;
+      color: $c-white;
+      background-color: $c-grey-dark-light;
+      &:focus{
+        background-color: $c-grey-dark;
+      }
+      &:first-child{
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
       }

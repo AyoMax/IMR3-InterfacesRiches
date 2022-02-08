@@ -26,10 +26,8 @@ export class Keywords extends React.Component {
             <div>
                 <ul>
                     {this.props.keywords.map((item, index) => (
-                        <li key={`keyword-group-${index}`}>
-                            <Keyword item={item} lifetime={30} currentTime={this.state.currentTime}/>
-                        </li>
-                    ), this)}
+                        <Keyword key={`keyword-group-${index}`} item={item} lifetime={120} currentTime={this.state.currentTime}/>
+                    ))}
                 </ul>
             </div>
         )
