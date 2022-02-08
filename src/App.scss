@@ -20,7 +20,7 @@ body {
 
 h1 {
   color: $c-white;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
 }
 
 h2 {
@@ -195,6 +195,13 @@ h2 {
   font-weight: bold;
   padding: .5em 1em;
   text-transform: uppercase;
+
+  &:focus {
+    box-shadow: none;
+  }
+  &:focus-visible {
+    outline: none;
+  }
 
   i, span {
     margin-right: .5em;
