@@ -74,7 +74,7 @@ class App extends React.Component {
             this.setState({
                 connected: false,
             });
-            this.ws = new WebSocket(URL)
+            this.initWebsocket()
         };
     }
 
@@ -84,8 +84,10 @@ class App extends React.Component {
         this.setState({messages: stateMessages});
     }
 
-    submitMessage = (pseudoString, messageString) => {
-        const message = {name: pseudoString, message: messageString};
+    submitMessage = (pseudoString, messageString, momentTimestamp = undefined) => {
+        let message = momentTimestamp === undefined
+            ? {name: pseudoString, message: messageString}
+            : {name: pseudoString, message: messageString, moment: momentTimestamp};
         this.ws.send(JSON.stringify(message));
     };
 
@@ -95,7 +97,7 @@ class App extends React.Component {
 
     goToVideoChapter(index) {
         const timeToSet = this.state.data.Chapters[index].pos;
-        console.log(timeToSet)
+        console.log(timeToSet);
         this.videoPlayer.setCurrentTime(timeToSet);
     }
 
@@ -104,8 +106,9 @@ class App extends React.Component {
     }
 
     updateCurrentTimes(state) {
-        this.map.updateState(state)
-        this.keywords.updateState(state)
+        this.map.updateState(state);
+        this.keywords.updateState(state);
+        this.chatWriter.updateVideoState(state);
     }
 
     /* ========= */
@@ -160,9 +163,13 @@ class App extends React.Component {
                             <aside className="chat">
                                 <ChatRoom
                                     messages={this.state.messages}
-                                    onMomentClick={(seconds) => this.videoPlayer.setCurrentTime(seconds)}/>
+                                    onMomentClick={(timestamp) => this.goToVideoTimestamp(timestamp)}/>
                                 <hr/>
-                                <ChatWriter onSendMessage={this.submitMessage}/>
+                                <ChatWriter
+                                    ref={chatWriter => {
+                                        this.chatWriter = chatWriter
+                                    }}
+                                    onSendMessage={this.submitMessage}/>
                             </aside>
                         </Col>
                     </Row>

@@ -10,37 +10,68 @@ export class ChatRoom extends React.Component {
             message: PropTypes.string.isRequired,
             moment: PropTypes.number
         })),
-        onMomentClick: PropTypes.func
+        onMomentClick: PropTypes.func.isRequired
     }
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            hasFirstScroll: false
+        }
     }
 
-    handleMomentClick(seconds) {
-        this.props.onMomentClick(seconds);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.autoScrollToBottom();
     }
 
-    formattedTimestamp(timestamp) {
-        let date = new Date(timestamp);
-        return `${date.getUTCHours()}h ${date.getUTCMinutes()}min ${date.getUTCSeconds()}s`;
+    handleMomentClick(evt, timestamp) {
+        console.log(timestamp)
+        if (timestamp !== undefined) this.props.onMomentClick(timestamp);
+    }
+
+    autoScrollToBottom() {
+        const firstScroll = !this.state.hasFirstScroll;
+        const container = this.chatroom;
+        if (firstScroll) {
+            container.scrollTop = container.scrollHeight;
+            this.setState({hasFirstScroll: true});
+        } else if (container.scrollTop + container.clientHeight === container.scrollHeight) {
+            container.scrollTop = container.scrollHeight;
+        }
+    }
+
+    timestampToString(timestamp) {
+        const date = new Date(timestamp);
+        let hours = date.getHours();
+        let minutes = "0" + date.getMinutes();
+        let seconds = "0" + date.getSeconds();
+        return `${hours}:${minutes.substring(-2)}:${seconds.substring(-2)}`;
     }
 
     render() {
         return (
-            <div className="chatroom">
+            <div
+                ref={chatroom => {
+                    this.chatroom = chatroom
+                }}
+                className="chatroom">
                 {this.props.messages.map((item, index) => (
                     <div key={index} className="msg">
                         <div className="msg-head">
                             <div className="msg-pseudo">{item.name}</div>
-                            <div className="msg-date">{this.formattedTimestamp(item.when)}</div>
+                            <div className="msg-date">{this.timestampToString(item.when)}</div>
                         </div>
                         <div>{item.message}</div>
                         {item.moment !== undefined &&
-                            <button data-moment={item.moment}
-                                    onClick={this.handleMomentClick.bind(item.moment)}>
-                                Moment à voir
-                            </button>
+                            <div className="msg-footer">
+                                <span className="msg-moment">{this.timestampToString(item.moment)}</span>
+                                <button className="btn-mini btn-white"
+                                        data-moment={item.moment}
+                                        onClick={this.handleMomentClick.bind(item.moment)}>
+                                    Go
+                                </button>
+                            </div>
                         }
                     </div>
                 ))}

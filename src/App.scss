@@ -1,12 +1,16 @@
-$c-chatroom: #111;
 $c-message: #222;
 $c-black: #111;
 $c-grey-dark: #222;
 $c-grey-dark-light: #494949;
 $c-grey-light: #939393;
+$c-white-darker: #e1e1e1;
+$c-white-dark: #f1f1f1;
 $c-white: #fff;
+$c-blue: #0dcaf0;
+$c-blue-light: #55D8F2;
+$c-blue-lighter: #9FE6F4;
 
-$c-border-radius: 1em;
+$border-radius: 1em;
 
 
 .leaflet-container {
@@ -14,12 +18,20 @@ $c-border-radius: 1em;
   width: 100%;
 }
 
+body {
+  background-color: $c-black;
+}
+
+h1 {
+  color: $c-white;
+}
+
 /*======*/
 /* CHAT */
 /*======*/
 
 .chat {
-  background-color: $c-chatroom;
+  background-color: $c-black;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -31,7 +43,7 @@ $c-border-radius: 1em;
 }
 
 .chatroom {
-  background-color: $c-chatroom;
+  background-color: $c-black;
   display: flex;
   flex: 1;
   flex-flow: column nowrap;
@@ -44,7 +56,7 @@ $c-border-radius: 1em;
 
   .msg {
     background-color: $c-message;
-    border-radius: $c-border-radius;
+    border-radius: 1em;
     color: $c-white;
     padding: .75em;
 
@@ -62,6 +74,19 @@ $c-border-radius: 1em;
       }
     }
 
+    .msg-footer {
+      background-color: $c-blue;
+      border-radius: 0 0 $border-radius $border-radius;
+      display: flex;
+      margin: .75em -.75em -.75em -.75em;
+      padding: .5em;
+      justify-content: flex-end;
+
+      .msg-moment {
+        margin-right: .5em;
+      }
+    }
+
     &:not(:last-child) {
       margin-bottom: 1em;
     }
@@ -69,7 +94,7 @@ $c-border-radius: 1em;
 }
 
 .chatwriter {
-  background-color: $c-chatroom;
+  background-color: $c-black;
   color: $c-white;
   padding: 1em;
 }
@@ -78,14 +103,47 @@ $c-border-radius: 1em;
 /* FORM */
 /*======*/
 
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Placeholder still possible";
+  color: gray;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 1em;
 
   input, textarea {
-    border-radius: $c-border-radius;
-    padding: .5em;
+    border: none;
+    padding: .75em;
+  }
+
+  input:first-child,
+  textarea:first-child {
+    border-radius: (.5em + 1em) (.5em + 1em) 0 0;
+  }
+
+  input:last-child,
+  textarea:last-child {
+    border-radius: 0 0 (.5em + 1em) (.5em + 1em);
+  }
+
+  input:not(:last-child),
+  textarea:not(:last-child) {
+    border-bottom: 1px solid $c-white-darker;
   }
 
   input {
@@ -103,65 +161,139 @@ $c-border-radius: 1em;
 /*========*/
 
 .btn {
-  border-radius: $c-border-radius;
+  border-radius: .5em + 1em;
   font-weight: bold;
+  padding: .5em 1em;
   text-transform: uppercase;
+
+  i {
+    margin-right: .5em;
+  }
+
+  &.btn-blue {
+    background-color: $c-blue;
+    color: $c-white;
+
+    &:hover {
+      background-color: $c-blue-light;
+    }
+  }
+
+  &.btn-blue-light {
+    background-color: $c-blue-light;
+    color: $c-white;
+
+    &:hover {
+      background-color: $c-blue-lighter;
+    }
+  }
+}
+
+.btn-mini {
+  border: none;
+  border-radius: .5em + .5em;
+  font-size: .75em;
+  font-weight: bold;
+  padding: .25em .75em;
+  text-transform: uppercase;
+
+
+  &.btn-white {
+    background-color: $c-white;
+
+    &:hover {
+      background-color: $c-white-darker;
+    }
+
+    &:active {
+      background-color: $c-white-dark;
+    }
+  }
+}
+
+.btn-group {
+  display: flex;
+
+  .btn {
+    border-radius: 0;
+
+    &:not(:last-child) {
+      border-right: 2px solid $c-white;
+    }
+
+    &:first-child {
+      border-radius: .5em + 1em 0 0 .5em + 1em;
+    }
+
+    &:last-child {
+      border-radius: 0 .5em + 1em .5em + 1em 0;
+    }
+  }
 }
 
 /*==========*/
 /* NAV TABS */
 /*==========*/
-.tab{
+.tab {
   padding: 15px;
   background-color: $c-black;
-  .nav-tabs{
+
+  .nav-tabs {
     border-bottom: unset;
     display: flex;
-    .nav-item{
+
+    .nav-item {
       padding-right: 10px;
       margin-bottom: 10px;
-      .nav-link{
+
+      .nav-link {
         font-size: 14px;
-        border-radius: $c-border-radius;
+        border-radius: $border-radius;
         color: white;
         background-color: $c-grey-dark;
         border: unset;
         transition: all 0.2s ease-in-out;
-        &.active{
+
+        &.active {
           background-color: $c-grey-dark-light;
           border: unset;
           color: $c-white;
         }
-        &:hover{
+
+        &:hover {
           border: unset;
-          &:not(.active){
+
+          &:not(.active) {
             background-color: $c-grey-dark-light;
           }
         }
       }
     }
   }
-  .list-group{
-    list-group-item{
-      &:first-child{
-        border-top-left-radius: $c-border-radius;
-        border-top-right-radius: $c-border-radius;
+
+  .list-group {
+    .list-group-item {
+      &:first-child {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
       }
-      &:last-child{
-        border-bottom-left-radius: $c-border-radius;
-        border-bottom-right-radius: $c-border-radius;
+
+      &:last-child {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
       }
     }
   }
 }
+
 /*==========*/
 /* KETWORDS */
 /*==========*/
 
-.on{
+.on {
   display: block;
 }
 
-.off{
+.off {
   display: none;
 }

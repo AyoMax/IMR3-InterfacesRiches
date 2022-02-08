@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 
 const LeafIcon = L.Icon.extend({
     options: {}
@@ -42,7 +42,7 @@ export class MapView extends React.Component {
         this.mapRef = React.createRef();
     }
 
-    updateState(state){
+    updateState(state) {
         // this.updatePosition(state.currentTime)
         this.setState({
             currentTime: state.currentTime
@@ -68,30 +68,30 @@ export class MapView extends React.Component {
         this.props.onMarkerClick(waypoint.timestamp)
     }
 
-    getIcon(index, currentTime){
+    getIcon(index, currentTime) {
         let icon;
         let currentWaypoint = this.props.waypoints[index];
         let nextTimePoint;
 
         let nextIndex = index + 1;
         let find = false;
-        while(nextIndex < this.props.waypoints.length && !find) {
-            if(this.props.waypoints[index].timestamp == this.props.waypoints[nextIndex].timestamp) find = true;
+        while (nextIndex < this.props.waypoints.length && !find) {
+            if (this.props.waypoints[index].timestamp == this.props.waypoints[nextIndex].timestamp) find = true;
             nextIndex++;
         }
         nextIndex = find ? nextIndex : index + 1
 
-        if(nextIndex < this.props.waypoints.length){
+        if (nextIndex < this.props.waypoints.length) {
             nextTimePoint = this.props.waypoints[nextIndex].timestamp;
-        }else{
+        } else {
             nextTimePoint = this.props.waypoints[index].timestamp + 1
         }
 
-        if(currentWaypoint.timestamp <= currentTime && nextTimePoint > currentTime){
+        if (currentWaypoint.timestamp <= currentTime && nextTimePoint > currentTime) {
             icon = yellowIcon
-        }else if(currentWaypoint.timestamp <= currentTime){
+        } else if (currentWaypoint.timestamp <= currentTime) {
             icon = greenIcon
-        }else{
+        } else {
             icon = blueIcon
         }
 
@@ -100,16 +100,18 @@ export class MapView extends React.Component {
 
     render() {
         return (
-            <MapContainer whenCreated={ mapInstance => { this.mapRef.current = mapInstance } }
+            <MapContainer whenCreated={mapInstance => {
+                this.mapRef.current = mapInstance
+            }}
                           center={this.state.centerPosition}
                           zoom={4}
-                          style={{height:"300px",width:"100%",position:"relative"}}
+                          style={{height: "300px", width: "100%", position: "relative"}}
                           scrollWheelZoom={false}>
                 <TileLayer
                     attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                 />
-                { this.props.waypoints.map((waypoint, index) => (
+                {this.props.waypoints.map((waypoint, index) => (
                     <Marker
                         position={[
                             waypoint.lat,
