@@ -12,12 +12,7 @@ $c-blue-light: #55D8F2;
 $c-blue-lighter: #9FE6F4;
 
 $border-radius: 1em;
-
-
-.leaflet-container {
-  height: 200px;
-  width: 100%;
-}
+$border-radius-2: 2em;
 
 body {
   background-color: $c-black;
@@ -279,6 +274,9 @@ h1 {
       &:focus{
         background-color: $c-grey-dark;
       }
+      &:hover{
+        background-color: $c-grey-dark;
+      }
       &:first-child{
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
@@ -296,10 +294,63 @@ h1 {
 /* KETWORDS */
 /*==========*/
 
-.on {
-  display: block;
+.keyword-component{
+  .keywords-list{
+    >li{
+      margin-bottom: 20px;
+    }
+    .progress{
+      height: 2em;
+      border-radius: 0 0 $border-radius $border-radius;
+      background-color: $c-grey-dark-light;
+      .progress-bar{
+        height: 30%;
+        margin-top: auto;
+      }
+    }
+    .keyword-list{
+      background-color: $c-grey-dark-light;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      li{
+        &:first-child a{
+          border-top-left-radius: $border-radius;
+          border-top-right-radius: $border-radius;
+        }
+        a{
+          border: 1px solid rgba(0,0,0,.125);
+          display: block;
+          padding: 0.5rem 1rem;
+          text-decoration: none;
+          color: $c-white;
+          &:hover{
+            background-color: $c-grey-dark;
+            border: 1px solid $c-grey-dark;
+          }
+        }
+      }
+    }
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+}
+/*=========*/
+/* LEAFLET */
+/*=========*/
+
+.video-react-video{
+  border-radius: $border-radius;
 }
 
-.off {
-  display: none;
+/*=========*/
+/* LEAFLET */
+/*=========*/
+
+.leaflet-container {
+  height: 200px;
+  width: 100%;
+  border-radius: $border-radius;
+  margin-top: 20px;
 }
