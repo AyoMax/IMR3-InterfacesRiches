@@ -24,6 +24,7 @@ export class Keywords extends React.Component {
     render() {
         return (
             <div class={"keyword-component"}>
+                <h2>Mots-Clés</h2>
                 <ul class={"keywords-list"}>
                     {this.props.keywords.map((item, index) => (
                         <Keyword key={`keyword-group-${index}`} item={item} lifetime={120} currentTime={this.state.currentTime}/>

@@ -19,7 +19,7 @@ export class Keyword extends React.Component {
     }
 
     render() {
-        if(this.props.currentTime >= parseInt(this.props.item.pos) && this.props.currentTime <= parseInt(this.props.item.pos) + this.props.lifetime){
+        if(this.props.currentTime > parseInt(this.props.item.pos) && this.props.currentTime <= parseInt(this.props.item.pos) + this.props.lifetime){
             return (
                 <li key={this.props.key}>
                     <ul class={"keyword-list"}>

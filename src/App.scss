@@ -23,6 +23,10 @@ h1 {
   padding: .5em 0;
 }
 
+h2{
+  color: $c-white;
+}
+
 /*======*/
 /* CHAT */
 /*======*/
@@ -248,8 +252,12 @@ h1 {
 }
 
 /*==========*/
-/* NAV TABS */
+/* CHAPTERS */
 /*==========*/
+
+.chapters-component{
+  margin-bottom: 20px;
+}
 
 .tab {
   padding: 15px;
@@ -267,12 +275,12 @@ h1 {
         font-size: 14px;
         border-radius: $border-radius;
         color: white;
-        background-color: $c-grey-dark;
+        background-color: $c-grey-dark-light;
         border: unset;
         transition: all 0.2s ease-in-out;
 
         &.active {
-          background-color: $c-grey-dark-light;
+          background-color: $c-grey-dark;
           border: unset;
           color: $c-white;
         }
@@ -281,22 +289,25 @@ h1 {
           border: unset;
 
           &:not(.active) {
-            background-color: $c-grey-dark-light;
+            background-color: $c-grey-dark;
           }
         }
       }
     }
   }
   .list-group{
+    max-height: 300px;
+    overflow: scroll;
+    border-radius: $border-radius;
     .list-group-item{
       transition: all 0.2s ease-in-out;
       color: $c-white;
-      background-color: $c-grey-dark-light;
+      background-color: $c-grey-dark;
       &:focus{
-        background-color: $c-grey-dark;
+        background-color: $c-grey-dark-light;
       }
       &:hover{
-        background-color: $c-grey-dark;
+        background-color: $c-grey-dark-light;
       }
       &:first-child{
         border-top-left-radius: $border-radius;
@@ -323,14 +334,14 @@ h1 {
     .progress{
       height: 2em;
       border-radius: 0 0 $border-radius $border-radius;
-      background-color: $c-grey-dark-light;
+      background-color: $c-grey-dark;
       .progress-bar{
         height: 30%;
         margin-top: auto;
       }
     }
     .keyword-list{
-      background-color: $c-grey-dark-light;
+      background-color: $c-grey-dark;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       li{
@@ -345,8 +356,8 @@ h1 {
           text-decoration: none;
           color: $c-white;
           &:hover{
-            background-color: $c-grey-dark;
-            border: 1px solid $c-grey-dark;
+            background-color: $c-grey-dark-light;
+            border: 1px solid $c-grey-dark-light;
           }
         }
       }
@@ -357,9 +368,10 @@ h1 {
     list-style-type: none;
   }
 }
-/*=========*/
-/* LEAFLET */
-/*=========*/
+
+/*=======*/
+/* VIDEO */
+/*=======*/
 
 .video-react-video{
   border-radius: $border-radius;

@@ -129,25 +129,13 @@ class App extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col className={"tab"} md="3">
-                            <Tabs defaultActiveKey="chapters">
-                                <Tab
-                                    eventKey="chapters"
-                                    title="Chapitres"
-                                >
-                                    <VideoChapters chapters={data.Chapters}
-                                                   onChapterClick={(index) => this.goToVideoChapter(index)}/>
-                                </Tab>
-                                <Tab
-                                    eventKey="keywords"
-                                    title="Mots clés"
-                                >
-                                    <Keywords
-                                        ref={keywords => {
-                                            this.keywords = keywords
-                                        }}
-                                        keywords={data.Keywords}/>
-                                </Tab>
-                            </Tabs>
+                            <VideoChapters chapters={data.Chapters}
+                                           onChapterClick={(index) => this.goToVideoChapter(index)}/>
+                            <Keywords
+                                ref={keywords => {
+                                    this.keywords = keywords
+                                }}
+                                keywords={data.Keywords}/>
                         </Col>
                         <Col md="6">
                             <main>

@@ -14,7 +14,8 @@ export class VideoChapters extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={"chapters-component"}>
+                <h2>Chapitres</h2>
                 <ListGroup numbered>
                     {this.props.chapters.map((item, index) => (
                         <ListGroup.Item

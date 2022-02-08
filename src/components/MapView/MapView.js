@@ -42,7 +42,6 @@ export class MapView extends React.Component {
     }
 
     updateState(state) {
-        // this.updatePosition(state.currentTime)
         this.setState({
             currentTime: state.currentTime
         })

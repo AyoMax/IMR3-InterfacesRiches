@@ -32,10 +32,6 @@ export class VideoPlayer extends React.Component {
 
     render() {
         const film = this.props.film;
-
-        // TODO : ligne à supprimer lorsque le json Heroku sera update
-        film.file_url = "https://ia600900.us.archive.org/32/items/Route_66_-_an_American_badDream/Route_66_-_an_American_badDream_512kb.mp4";
-
         return (
             <div>
                 <h1>{film.title}</h1>
