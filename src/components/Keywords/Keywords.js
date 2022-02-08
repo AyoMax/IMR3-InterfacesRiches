@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Keyword} from "./Keyword";
 
 export class Keywords extends React.Component {
     static propTypes = {
@@ -10,21 +11,13 @@ export class Keywords extends React.Component {
         super(props);
 
         this.state = {
-            currentKeywords: []
+            currentTime: 0
         }
     }
 
     updateState(state){
-        this.updateKeywords(state.currentTime)
-    }
-
-    updateKeywords(currentTime){
-        let newCurrentKeywords = []
-        this.props.keywords.forEach(keyword => {
-            if(keyword.pos < currentTime) newCurrentKeywords.push(keyword)
-        })
         this.setState({
-            currentKeywords: newCurrentKeywords
+            currentTime: state.currentTime
         })
     }
 
@@ -32,17 +25,11 @@ export class Keywords extends React.Component {
         return (
             <div>
                 <ul>
-                    {this.state.currentKeywords.map((item, index) => (
+                    {this.props.keywords.map((item, index) => (
                         <li key={`keyword-group-${index}`}>
-                            <ul>
-                                {item.data.map((keyword, index) => (
-                                    <li key={`keyword-${index}`}>
-                                        <a href={keyword.url}>{keyword.title}</a>
-                                    </li>
-                                ))}
-                            </ul>
+                            <Keyword item={item} lifetime={30} currentTime={this.state.currentTime}/>
                         </li>
-                    ))}
+                    ), this)}
                 </ul>
             </div>
         )

@@ -1,6 +1,9 @@
 $c-chatroom: #111;
 $c-message: #222;
-$c-grey-light: #aaa;
+$c-black: #111;
+$c-grey-dark: #222;
+$c-grey-dark-light: #494949;
+$c-grey-light: #939393;
 $c-white: #fff;
 
 $c-border-radius: 1em;
@@ -41,7 +44,7 @@ $c-border-radius: 1em;
 
   .msg {
     background-color: $c-message;
-    border-radius: 1em;
+    border-radius: $c-border-radius;
     color: $c-white;
     padding: .75em;
 
@@ -103,4 +106,62 @@ $c-border-radius: 1em;
   border-radius: $c-border-radius;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+/*==========*/
+/* NAV TABS */
+/*==========*/
+.tab{
+  padding: 15px;
+  background-color: $c-black;
+  .nav-tabs{
+    border-bottom: unset;
+    display: flex;
+    .nav-item{
+      padding-right: 10px;
+      margin-bottom: 10px;
+      .nav-link{
+        font-size: 14px;
+        border-radius: $c-border-radius;
+        color: white;
+        background-color: $c-grey-dark;
+        border: unset;
+        transition: all 0.2s ease-in-out;
+        &.active{
+          background-color: $c-grey-dark-light;
+          border: unset;
+          color: $c-white;
+        }
+        &:hover{
+          border: unset;
+          &:not(.active){
+            background-color: $c-grey-dark-light;
+          }
+        }
+      }
+    }
+  }
+  .list-group{
+    list-group-item{
+      &:first-child{
+        border-top-left-radius: $c-border-radius;
+        border-top-right-radius: $c-border-radius;
+      }
+      &:last-child{
+        border-bottom-left-radius: $c-border-radius;
+        border-bottom-right-radius: $c-border-radius;
+      }
+    }
+  }
+}
+/*==========*/
+/* KETWORDS */
+/*==========*/
+
+.on{
+  display: block;
+}
+
+.off{
+  display: none;
 }

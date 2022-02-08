@@ -65,8 +65,6 @@ export class MapView extends React.Component {
     // }
 
     handleMarkerClick(waypoint) {
-        this.mapRef.current.setView([waypoint.lat, waypoint.lng])
-        console.log([waypoint.lat, waypoint.lng])
         this.props.onMarkerClick(waypoint.timestamp)
     }
 

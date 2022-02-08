@@ -7,12 +7,15 @@ import {ChatWriter} from "./components/ChatWriter/ChatWriter";
 import {MapView} from "./components/MapView/MapView";
 import {Col, Container, Row, Tabs, Tab} from "react-bootstrap";
 import {Keywords} from "./components/Keywords/Keywords";
+let backup_data = require('./data.json');
+
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            connected: false,
             data_loaded: false,
             data: {},
             messages: []
@@ -29,12 +32,21 @@ class App extends React.Component {
             .then(res => res.json())
             .then(result => {
                 this.setState({
+                    connected: true,
                     data_loaded: true,
                     data: result
                 });
+            })
+            .catch(error => {
+                console.log(backup_data)
+                this.setState({
+                    connected: false,
+                    data_loaded: true,
+                    data: backup_data
+                });
+                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
             });
-
-        this.initWebsocket();
+        if(this.state.connected) this.initWebsocket();
     }
 
     /* =================== */
@@ -107,7 +119,7 @@ class App extends React.Component {
             return (
                 <Container fluid>
                     <Row>
-                        <Col md="3">
+                        <Col className={"tab"} md="3">
                             <Tabs defaultActiveKey="chapters">
                                 <Tab
                                     eventKey="chapters"
