@@ -338,8 +338,10 @@ h2 {
       color: $c-white;
       background-color: $c-grey-dark;
 
-      &:focus {
+      &.active {
         background-color: $c-grey-dark-light;
+        border-color: $c-grey-dark-light;
+        color: #939393;
       }
 
       &:hover {

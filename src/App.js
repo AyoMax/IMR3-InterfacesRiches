@@ -114,6 +114,7 @@ class App extends React.Component {
     updateCurrentTimes(state) {
         this.map.updateState(state);
         this.keywords.updateState(state);
+        this.chapters.updateState(state);
         this.chatWriter.updateVideoState(state);
     }
 
@@ -129,8 +130,12 @@ class App extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 2 }} md={{ span: 12, order: 3 }} lg={{ span: 3, order: 1 }} className={"tab p-3 border-right"}>
-                            <VideoChapters chapters={data.Chapters}
-                                           onChapterClick={(index) => this.goToVideoChapter(index)}/>
+                            <VideoChapters
+                                ref={chapters => {
+                                    this.chapters = chapters
+                                }}
+                                chapters={data.Chapters}
+                                onChapterClick={(index) => this.goToVideoChapter(index)}/>
                             <Keywords
                                 ref={keywords => {
                                     this.keywords = keywords
