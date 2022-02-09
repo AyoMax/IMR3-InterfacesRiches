@@ -405,22 +405,37 @@ h2 {
       z-index: 10;
 
       li {
-        &:first-child a {
-          border-top-left-radius: $border-radius;
-          border-top-right-radius: $border-radius;
-        }
-
         a {
           border: 1px solid rgba(0, 0, 0, .125);
           display: block;
+          position: relative;
           padding: 0.5rem 1rem;
           text-decoration: none;
           color: $c-white;
-
+          padding-left: 40px;
+          &::before{
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            height: 20px;
+            width: 20px;
+            background-image: url("share.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+          }
           &:hover {
             background-color: $c-grey-dark-light;
             border: 1px solid $c-grey-dark-light;
           }
+        }
+
+        &:first-child a {
+          border-top-left-radius: $border-radius;
+          border-top-right-radius: $border-radius;
         }
       }
     }

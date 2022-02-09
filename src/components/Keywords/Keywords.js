@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Keyword} from "./Keyword";
+import {Keyword} from "./keyword/Keyword";
 
 export class Keywords extends React.Component {
     static propTypes = {
