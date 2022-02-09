@@ -128,7 +128,7 @@ class App extends React.Component {
             return (
                 <Container fluid>
                     <Row>
-                        <Col className={"tab p-3 border-right"} md="3">
+                        <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 2 }} md={{ span: 12, order: 3 }} lg={{ span: 3, order: 1 }} className={"tab p-3 border-right"}>
                             <VideoChapters chapters={data.Chapters}
                                            onChapterClick={(index) => this.goToVideoChapter(index)}/>
                             <Keywords
@@ -137,7 +137,7 @@ class App extends React.Component {
                                 }}
                                 keywords={data.Keywords}/>
                         </Col>
-                        <Col md="6" className="p-3">
+                        <Col xs={{ span: 12, order: 1 }} sm={{ span: 12, order: 1 }} md={{ span: 7, order: 1 }} lg={{ span: 6, order: 2 }} className="p-3">
                             <main>
                                 <VideoPlayer
                                     ref={videoPlayer => {
@@ -153,7 +153,7 @@ class App extends React.Component {
                                     waypoints={data.Waypoints}/>
                             </main>
                         </Col>
-                        <Col md="3" className="p-0">
+                        <Col xs={{ span: 12, order: 3 }} sm={{ span: 6, order: 3 }} md={{ span: 5, order: 2 }} lg={{ span: 3, order: 3 }} className="p-0">
                             <aside className="chat">
                                 <ChatRoom
                                     messages={this.state.messages}
