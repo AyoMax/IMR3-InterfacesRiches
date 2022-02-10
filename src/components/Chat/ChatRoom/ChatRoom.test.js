@@ -16,13 +16,14 @@ test('Chatroom render without crashing', () => {
                 moment: 462
             }
         ],
-        onMomentClick: () => {}
+        onMomentClick: () => {
+        }
     };
 
     render(<ChatRoom {...props}/>)
 });
 
-test('Chatroom contain n message', () => {
+test('Chatroom contain 3 message', () => {
     const props = {
         messages: [
             {
@@ -35,14 +36,21 @@ test('Chatroom contain n message', () => {
                 name: "Bob",
                 message: "Hi, I'm Bob. Checkout this moment!",
                 moment: 462
+            },
+            {
+                when: 1580742485,
+                name: "Truc",
+                message: "Test test",
+                moment: 462
             }
         ],
-        onMomentClick: () => {}
+        onMomentClick: () => {
+        }
     };
 
-    render(<ChatRoom {...props}/>)
-
-
+    const {container} = render(<ChatRoom {...props}/>);
+    const messages = container.querySelectorAll(".msg");
+    expect(messages.length).toBe(3);
 });
 
 test('Chatroom doesn\'t contain message', () => {
@@ -52,5 +60,7 @@ test('Chatroom doesn\'t contain message', () => {
         }
     };
 
-    render(<ChatRoom {...props}/>)
+    const {container} = render(<ChatRoom {...props}/>);
+    const messages = container.querySelectorAll(".msg");
+    expect(messages.length).toBe(0);
 });

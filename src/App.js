@@ -3,9 +3,10 @@ import './App.scss';
 import {VideoPlayer} from "./components/VideoPlayer/VideoPlayer";
 import {VideoChapters} from "./components/VideoChapters/VideoChapters";
 import {MapView} from "./components/MapView/MapView";
-import {Col, Container, Row, Tabs, Tab} from "react-bootstrap";
+import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {Keywords} from "./components/Keywords/Keywords";
 import {Chat} from "./components/Chat/Chat";
+
 let backup_data = require('./data.json');
 
 
@@ -45,6 +46,7 @@ class App extends React.Component {
 
     /* =============== */
     /* VIDEO METHOD(S) */
+
     /* =============== */
 
     goToVideoChapter(index) {
@@ -66,6 +68,7 @@ class App extends React.Component {
 
     /* ========= */
     /* RENDERING */
+
     /* ========= */
 
     render() {
@@ -75,7 +78,8 @@ class App extends React.Component {
             return (
                 <Container fluid>
                     <Row>
-                        <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 2 }} md={{ span: 12, order: 3 }} lg={{ span: 3, order: 1 }} className={"tab p-3 border-right"}>
+                        <Col xs={{span: 12, order: 2}} sm={{span: 6, order: 2}} md={{span: 12, order: 3}}
+                             lg={{span: 3, order: 1}} className={"tab p-3 border-right"}>
                             <VideoChapters
                                 ref={chapters => {
                                     this.chapters = chapters
@@ -88,7 +92,8 @@ class App extends React.Component {
                                 }}
                                 keywords={data.Keywords}/>
                         </Col>
-                        <Col xs={{ span: 12, order: 1 }} sm={{ span: 12, order: 1 }} md={{ span: 7, order: 1 }} lg={{ span: 6, order: 2 }} className="p-3">
+                        <Col xs={{span: 12, order: 1}} sm={{span: 12, order: 1}} md={{span: 7, order: 1}}
+                             lg={{span: 6, order: 2}} className="p-3">
                             <main>
                                 <VideoPlayer
                                     ref={videoPlayer => {
@@ -104,10 +109,11 @@ class App extends React.Component {
                                     waypoints={data.Waypoints}/>
                             </main>
                         </Col>
-                        <Col xs={{ span: 12, order: 3 }} sm={{ span: 6, order: 3 }} md={{ span: 5, order: 2 }} lg={{ span: 3, order: 3 }} className="p-0">
+                        <Col xs={{span: 12, order: 3}} sm={{span: 6, order: 3}} md={{span: 5, order: 2}}
+                             lg={{span: 3, order: 3}} className="p-0">
                             <Chat ref={chat => {
                                 this.chat = chat
-                            }}onMomentClick={(timestamp) => this.goToVideoTimestamp(timestamp)}/>
+                            }} onMomentClick={(timestamp) => this.goToVideoTimestamp(timestamp)}/>
                         </Col>
                     </Row>
                 </Container>
@@ -115,7 +121,9 @@ class App extends React.Component {
         } else {
             return (
                 <div className="App">
-                    <p>Loading data</p>
+                    <Spinner animation="border" variant="info" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
                 </div>
             )
         }

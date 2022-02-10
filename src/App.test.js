@@ -263,6 +263,13 @@ beforeAll(() => {
     });
 });
 
+// test("contains menu after async fetch", async () => {
+//     const {container} = render(<App/>);
+//     const menu = await waitForElement(() =>
+//         container.querySelector(`[id="menu"]`));
+//     expect(menu).toBeInDocument();
+// });
+
 test("Backend is called", () => {
     render(<App/>);
     expect(global.fetch).toHaveBeenCalledTimes(1);
