@@ -2,11 +2,10 @@ import React from "react";
 import './App.scss';
 import {VideoPlayer} from "./components/VideoPlayer/VideoPlayer";
 import {VideoChapters} from "./components/VideoChapters/VideoChapters";
-import {ChatRoom} from "./components/ChatRoom/ChatRoom";
-import {ChatWriter} from "./components/ChatWriter/ChatWriter";
 import {MapView} from "./components/MapView/MapView";
 import {Col, Container, Row, Tabs, Tab} from "react-bootstrap";
 import {Keywords} from "./components/Keywords/Keywords";
+import {Chat} from "./components/Chat/Chat";
 let backup_data = require('./data.json');
 
 
@@ -15,16 +14,10 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            connected: true,
             data_loaded: false,
-            data: {},
-            messages: []
+            data: {}
         }
     }
-
-    /* ================= */
-    /* LIFECYCLE HOOK(S) */
-    /* ================= */
 
     async componentDidMount() {
         let isServerUp = false;
@@ -47,55 +40,8 @@ class App extends React.Component {
                 });
                 isServerUp = false;
                 console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-
             });
-
-        if(isServerUp) this.initWebsocket();
     }
-
-    /* =================== */
-    /* WEBSOCKET METHOD(S) */
-    /* =================== */
-
-    initWebsocket() {
-        const URL = "wss://imr3-react.herokuapp.com";
-        this.ws = new WebSocket(URL);
-
-        this.ws.onopen = () => {
-            console.log("connected");
-            this.setState({
-                connected: true
-            });
-        };
-
-        this.ws.onmessage = evt => {
-            const messages = JSON.parse(evt.data);
-            messages.map(message => this.addMessage(message));
-        };
-
-        this.ws.onclose = () => {
-            console.log("disconnected, reconnect.");
-            this.setState({
-                connected: false,
-            });
-            this.initWebsocket()
-        };
-    }
-
-    addMessage(message) {
-        if (this.ws !== undefined) {
-            let stateMessages = this.state.messages;
-            stateMessages.push(message)
-            this.setState({messages: stateMessages});
-        }
-    }
-
-    submitMessage = (pseudoString, messageString, momentTimestamp = undefined) => {
-        let message = momentTimestamp === undefined
-            ? {name: pseudoString, message: messageString}
-            : {name: pseudoString, message: messageString, moment: momentTimestamp};
-        this.ws.send(JSON.stringify(message));
-    };
 
     /* =============== */
     /* VIDEO METHOD(S) */
@@ -115,7 +61,7 @@ class App extends React.Component {
         this.map.updateState(state);
         this.keywords.updateState(state);
         this.chapters.updateState(state);
-        this.chatWriter.updateVideoState(state);
+        this.chat.updateVideoState(state);
     }
 
     /* ========= */
@@ -159,17 +105,9 @@ class App extends React.Component {
                             </main>
                         </Col>
                         <Col xs={{ span: 12, order: 3 }} sm={{ span: 6, order: 3 }} md={{ span: 5, order: 2 }} lg={{ span: 3, order: 3 }} className="p-0">
-                            <aside className="chat">
-                                <ChatRoom
-                                    messages={this.state.messages}
-                                    onMomentClick={(timestamp) => this.goToVideoTimestamp(timestamp)}/>
-                                <hr/>
-                                <ChatWriter
-                                    ref={chatWriter => {
-                                        this.chatWriter = chatWriter
-                                    }}
-                                    onSendMessage={this.submitMessage}/>
-                            </aside>
+                            <Chat ref={chat => {
+                                this.chat = chat
+                            }}onMomentClick={(timestamp) => this.goToVideoTimestamp(timestamp)}/>
                         </Col>
                     </Row>
                 </Container>

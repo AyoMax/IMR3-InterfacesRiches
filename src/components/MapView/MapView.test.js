@@ -1,5 +1,5 @@
 import {render} from "@testing-library/react";
-import {ChatWriter} from "../ChatWriter/ChatWriter";
+import {ChatWriter} from "../Chat/ChatWriter/ChatWriter";
 import {MapView} from "./MapView";
 
 test('MapView render without crashing', () => {
