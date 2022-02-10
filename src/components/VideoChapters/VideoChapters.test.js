@@ -17,40 +17,40 @@ const props = {
 
 let callbackValue = undefined;
 
-function defaultCallback(value){
+function defaultCallback(value) {
     callbackValue = value;
 }
 
 test('VideoChapters render without crashing', () => {
-    render(<VideoChapters {...props} onChapterClick={() => { return }}/>)
+    render(<VideoChapters {...props} onChapterClick={() => {}}/>)
 });
 
 test('VideoChapters check length', () => {
-    const {container} = render(<VideoChapters {...props} onChapterClick={() => { return }}/>)
+    const {container} = render(<VideoChapters {...props} onChapterClick={() => {}}/>)
     const chapters = container.querySelectorAll(".chapter")
     expect(chapters.length).toBe(props.chapters.length)
 });
 
 test('VideoChapters check active 1', () => {
     let chaptersRef = React.createRef();
-    const {container} = render(<VideoChapters ref={chaptersRef} {...props} onChapterClick={() => { return }}/>)
+    const {container} = render(<VideoChapters ref={chaptersRef} {...props} onChapterClick={() => {}}/>)
     let state = {
         currentTime: 5
     }
     chaptersRef.current.updateState(state);
-    const chapters = container.querySelector(".active").getString();
+    const chapters = container.querySelector(".active").textContent;
     expect(chapters).toBe(props.chapters[0].title)
 });
 
 test('VideoChapters check active 2 (end chapter)', () => {
     let chaptersRef = React.createRef();
-    const {container} = render(<VideoChapters ref={chaptersRef} {...props} onChapterClick={() => { return }}/>)
+    const {container} = render(<VideoChapters ref={chaptersRef} {...props} onChapterClick={() => {}}/>)
     let state = {
         currentTime: 500
     }
     chaptersRef.current.updateState(state);
-    const chapters = container.querySelector(".active").getString();
-    expect(chapters).toBe(props.chapters[props.chapters.length-1].title)
+    const chapters = container.querySelector(".active").textContent;
+    expect(chapters).toBe(props.chapters[props.chapters.length - 1].title)
 });
 
 test('VideoChapters check click', () => {
