@@ -59,7 +59,7 @@ export class Keywords extends React.Component {
                     ))}
                     {this.state.defaultPrompt &&
                         <li className={"default-keyword"}>
-                            <p className={"italic"}>Aucun mot-clés</p>
+                            <p className={"italic"}>Aucun mot-clés, actuellement</p>
                         </li>
                     }
                 </ul>

@@ -39,7 +39,8 @@ export class ChatRoom extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (snapshot != null) {
-            if (0 < Math.abs(snapshot) && Math.abs(snapshot) < 1) {
+            const snapAbs = Math.abs(snapshot);
+            if (0 < snapAbs && snapAbs < 1) {
                 this.chatroomRef.current.scrollTop = this.chatroomRef.current.scrollHeight;
             }
         }

@@ -68,5 +68,5 @@ test('Keywords render not in currentTime', () => {
     expect(title2).toBeNull();
     expect(title3).toBeNull();
 
-    screen.queryByText('Aucun mot-clés');
+    screen.queryByText('Aucun mot-clés, actuellement');
 });
