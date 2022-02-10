@@ -7,14 +7,8 @@ export class Keyword extends React.Component {
     static propTypes = {
         index: PropTypes.number.isRequired,
         item: PropTypes.object.isRequired,
-        lifetime: PropTypes.number.isRequired
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentTime: 0
-        }
+        lifetime: PropTypes.number.isRequired,
+        currentTime: PropTypes.number.isRequired
     }
 
     getPromptState() {
