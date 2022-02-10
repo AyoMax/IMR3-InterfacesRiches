@@ -15,12 +15,15 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            minTimeToLoad: false,
             data_loaded: false,
             data: {}
         }
     }
 
     async componentDidMount() {
+        this.minTimeToLoad(1000)
+
         let isServerUp = false;
         // Get JSON
         await fetch("https://imr3-react.herokuapp.com/backend")
@@ -42,6 +45,14 @@ class App extends React.Component {
                 isServerUp = false;
                 console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
             });
+    }
+
+    minTimeToLoad(time){
+        setTimeout(() => {
+            this.setState({
+                minTimeToLoad: true
+            })
+        }, time)
     }
 
     /* =============== */
@@ -72,9 +83,9 @@ class App extends React.Component {
     /* ========= */
 
     render() {
-        const {data_loaded, data} = this.state;
+        const {data_loaded, data, minTimeToLoad} = this.state;
 
-        if (data_loaded) {
+        if (data_loaded && minTimeToLoad) {
             return (
                 <Container fluid>
                     <Row>
@@ -120,7 +131,7 @@ class App extends React.Component {
             );
         } else {
             return (
-                <div className="App">
+                <div className="App d-flex justify-content-center align-items-center">
                     <Spinner animation="border" variant="info" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>

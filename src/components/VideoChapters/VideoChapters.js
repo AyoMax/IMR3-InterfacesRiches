@@ -43,7 +43,7 @@ export class VideoChapters extends React.Component {
                 <ListGroup numbered>
                     {this.props.chapters.map((item, index) => (
                         <ListGroup.Item
-                            className={this.getState(index)}
+                            className={"chapter " +this.getState(index)}
                             action
                             key={index}
                             onClick={this.handleChapterClick.bind(this, index)}
