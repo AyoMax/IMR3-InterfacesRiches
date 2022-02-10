@@ -21,6 +21,10 @@ function defaultCallback(value){
     callbackValue = value;
 }
 
+test('VideoChapters render without crashing', () => {
+    render(<VideoChapters {...props} onChapterClick={() => { return }}/>)
+});
+
 test('VideoChapters check length', () => {
     const {container} = render(<VideoChapters {...props} onChapterClick={() => { return }}/>)
     const chapters = container.querySelectorAll(".chapter")

@@ -37,6 +37,10 @@ const props = {
     ]
 };
 
+test('Keywords render without crashing', () => {
+    render(<Keywords {...props}/>)
+});
+
 test('Keywords render in currentTime', () => {
     let keyRef = React.createRef();
     render(<Keywords ref={keyRef} {...props}/>)
